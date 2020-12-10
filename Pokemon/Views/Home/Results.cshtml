@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Pokemon.ApiContracts.PokemonSingleResult>
+
+@{
+    ViewData["Title"] = "Results";
+}
+
+<h1>Results</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Count
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.name)
+            </th>
+            <th>
+                Picture
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@{
+    int count = 0;
+}
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @{
+                    count++;
+                    <div>@count</div>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            @{
+                var name = $"{item.name.Substring(0, 1).ToUpper()}{item.name.Substring(1)}";
+                <td>@name</td>
+            }
+            <td>
+                @{
+                    if (!string.IsNullOrWhiteSpace(item.sprites.front_default))
+                    {
+                        <img src="@item.sprites.front_default" />
+                    }
+                    else
+                    {
+                        <div>no image provided</div>
+                    }
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
